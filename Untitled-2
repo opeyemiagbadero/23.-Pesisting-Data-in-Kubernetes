@@ -1,0 +1,36 @@
+kops /usr/local/bin/kops
+
+"AccessKeyId": "AKIA2BVIXX5INR6QDHHH"
+
+"SecretAccessKey": "eoijpvd/CimgWh79GsCr21It4plVBJyEb2Iyytfs"
+
+aws s3api create-bucket \
+    --bucket ope-kops-prefix-example-com-state-store \
+    --region us-east-1
+
+
+aws s3api put-bucket-versioning --bucket ope-kops-prefix-example-com-state-store  --versioning-configuration Status=Enabled
+
+aws s3api create-bucket \
+    --bucket ope-kops-prefix-example-com-oidc-store \
+    --region us-east-1 \
+    --acl public-read
+
+
+aws s3api put-bucket-encryption --bucket ope-kops-prefix-example-com-state-store --server-side-encryption-configuration '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"AES256"}}]}'
+
+export NAME=myfirstclusters.k8s.local
+export KOPS_STATE_STORE=s3://ope-kops-prefix-example-com-state-store
+
+
+aws ec2 describe-availability-zones --region us-east-1
+
+
+kops create cluster \
+    --name=${NAME} \
+    --cloud=aws \
+    --zones=us-east-1a \
+    --discovery-store=s3://ope-kops-prefix-example-com-oidc-store/${NAME}/discovery
+
+
+vol-009768c9315f25758
