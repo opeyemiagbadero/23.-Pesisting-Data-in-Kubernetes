@@ -1,8 +1,8 @@
 kops /usr/local/bin/kops
 
-"AccessKeyId": "AKIA2BVIXX5INR6QDHHH"
+"AccessKeyId":
 
-"SecretAccessKey": "eoijpvd/CimgWh79GsCr21It4plVBJyEb2Iyytfs"
+"SecretAccessKey": 
 
 aws s3api create-bucket \
     --bucket ope-kops-prefix-example-com-state-store \
